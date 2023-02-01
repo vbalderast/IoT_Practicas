@@ -1,27 +1,31 @@
-#! /usr/bin/python
+#!/usr/bin/env python
+#Se importa el módulo
 import socket
 
+#instanciamos un objeto para trabajar con el socket
+ser = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+#Puerto y servidor que debe escuchar
+ser.bind(("192.168.1.98", 5001))
 
-def main():
-    HOST = "127.0.0.112"
-    PORT = 5001
+#Aceptamos conexiones entrantes con el metodo listen. Por parámetro las conexio>
+ser.listen(1)
+#Instanciamos un objeto cli (socket cliente) para recibir datos
+cli, addr = ser.accept()
 
-    server_socket = socket.socket()
-    server_socket.bind((HOST, PORT))
+while True:
 
-    server_socket.listen(2)
-    conn, address = server_socket.accept()
-    print("Connection to address: " + str(address))
-    while True:
-        data = conn.recv(1024).decode()
-        if not data:
-            break
-        print("Client message: " + str(data))
-        data = input('Server message: ')
-        conn.send(data.encode())
+    #Recibimos el mensaje, con el metodo recv recibimos datos. Por parametro la>
+    recibido = cli.recv(1024)
 
-    conn.close()
+    #Si se reciben datos nos muestra la IP y el mensaje recibido
+    print("Recibo conexion de la IP: " + str(addr[0]) + " Puerto: " + str(addr[>
+
+    #Devolvemos el mensaje al cliente
+    cli.send(recibido)
 
 
-if _name_ == "_main_":
-    main()
+#Cerramos la instancia del socket cliente y servidor
+cli.close()
+ser.close()
+
+print("Conexiones cerradas")
