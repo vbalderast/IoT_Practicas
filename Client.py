@@ -1,25 +1,26 @@
-#! /usr/bin/python
+#!/usr/bin/env python
 
+#Variables
+host = '192.168.1.98'
+port = 5001
+#Se importa el módulo
 import socket
+#Creación de un objeto socket (lado cliente)
+obj = socket.socket()
 
-def main():
+#Conexión con el servidor. Parametros: IP (puede ser del tipo 192.168.1.1 o loc>
+obj.connect((host, port))
+print("Conectado al servidor")
+#Creamos un bucle para retener la conexion
+while True:
+    #Instanciamos una entrada de datos para que el cliente pueda enviar mensajes
+    mens = input("Mensaje desde Cliente a Servidor >> ")
 
-    HOST = "127.0.0.112"
-    PORT = 5001
+    #Con el método send, enviamos el mensaje
+    obj.send((mens))
+#Cerramos la instancia del objeto servidor
+obj.close()
 
-    client_socket = socket.socket()
-    client_socket.connect((HOST, PORT))
+#Imprimimos la palabra Adios para cuando se cierre la conexion
+print("Conexión cerrada")
 
-    message = input("Client message:")
-    while message.lower().strip() != 'bye':
-        client_socket.send(message.encode())
-        data = client_socket.recv(1024).decode()
-
-        print('Server: ' + data)
-        message = input("Client message: ")
-
-    client_socket.close()
-
-
-if _name_ == "_main_":
-    main()
