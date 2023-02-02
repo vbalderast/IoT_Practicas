@@ -1,7 +1,8 @@
 # IoT Client-Server
 This repository contains python codes to connect a server and a client utilizing a socket.
 
-#Process
+Process
+
 You will require two terminals otherwise connected to the same raspberry pi through SSH
 First, you have to compile the server by typing:
 
